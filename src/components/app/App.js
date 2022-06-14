@@ -18,12 +18,13 @@ const getFinishedTodosCount = (todos) => todos.reduce((accumulator, current) => 
   accumulator.total = todos.length;
 
   if (current.isFinished) {
-    accumulator.isFinished = accumulator.isFinished + 1;
+    accumulator.finished = accumulator.finished + 1;
   }
 
   return accumulator;
 }, { total: 0, finished: 0 })
 
+//  все, активные, выполненые 
 const setFilterTab = (tab, todos) => {
   if(tab === 0) {
     return todos;
@@ -32,14 +33,14 @@ const setFilterTab = (tab, todos) => {
   } else if (tab === 2) {
     return todos.filter((todo) => todo.isFinished);
   }
-}
+} 
 
 const App = () => {
   const [tab, setTab] = useState(0);
   const [isOpen, setIsOpen] = useState(false); // Открытие/закрытие модального окна
   const [isOpenDisplay, setIsOpenDisplsy] = useState(false); //Отктыие модал. для просмотра заметки
   const [todos, setTodos] = useState([]); // Todo
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState(initialFormData); //текущее значение input
   console.log('todos:' , todos);
 
   const totalCount = getFinishedTodosCount(todos);
@@ -49,19 +50,19 @@ const App = () => {
   const resetAll = () => {
     setIsOpen(false);
     setIsOpenDisplsy(false);
-    setFormData();
-  }
+    setFormData(initialFormData);
+  } // Возвращение к  первоночальному состоянию после отправки
 
 
-  const handleOpenModal = () => setIsOpen((prevState) => !prevState);
+  const handleOpenModal = () => setIsOpen((prevState) => !prevState); // открытие/закрытие модального окна
 
   const handleSetFieldValue = (fieldName, value) =>
     setFormData((prevState) => ({ ...prevState, [fieldName]: value }));
 
-  const handleChangeTab = (tabValue) => setTab(tabValue);
+  const handleChangeTab = (tabValue) => setTab(tabValue); //Табы
 
   const handleSetTodoOnSubmit = (e) => {
-    e.preventDevault();
+    e.preventDefault();
 
     if(formData.isEdit) {
       const editedTodos = todos;
@@ -72,18 +73,18 @@ const App = () => {
     }
 
     resetAll();
-  };
+  }; // Отправка формы
 
   const handleMarkTodo = (isChecked, index) => {
     const updatedTodos = todos.slice();
     updatedTodos.splice(index, 1, { ...todos[index], isFinished: isChecked});
     setTodos(updatedTodos);
-  }
+  } // Перечеркивание выполнено или нет
 
   const handleOpenTodo = (todo) => {
     setIsOpenDisplsy(true);
     setFormData(todo);
-  }
+  } // Открытие заметки
 
   const handleEditTodo = () => {
     setFormData((prevState) => ({ ...prevState, isEdit: true }));
@@ -94,21 +95,21 @@ const App = () => {
   const handleRemoveTodo = () => {
     setTodos(todos.filter((item) => item.id !== formData.id));
     resetAll();
-  }
+  } // удаление todo
 
   return (
     <div className="todo-wrapper">
       <Header
-        handleOpenModal={handleOpenModal}//
-        isOpen={isOpen}//
-        handleSetFieldValue={handleSetFieldValue}//
-        formData={formData}//
-        handleSetTodoOnSubmit={handleSetTodoOnSubmit}//
-        handleEditTodo={handleEditTodo}//
-        isOpenDisplay={isOpenDisplay}//
-        handleRemoveTodo={handleRemoveTodo}//
-        handleCloseButton={resetAll}//
-        totalCount={totalCount}//
+        handleOpenModal={handleOpenModal}
+        isOpen={isOpen}
+        handleSetFieldValue={handleSetFieldValue}
+        formData={formData}
+        handleSetTodoOnSubmit={handleSetTodoOnSubmit}
+        handleEditTodo={handleEditTodo}
+        isOpenDisplay={isOpenDisplay}
+        handleRemoveTodo={handleRemoveTodo}
+        handleCloseButton={resetAll}
+        totalCount={totalCount}
       />
       <Actions 
       handleChangeTab={handleChangeTab}

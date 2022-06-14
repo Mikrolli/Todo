@@ -23,7 +23,7 @@ const Todo = ({ todo, index, handleMarkTodo, handleOpenTodo }) => {
         onClick={() => handleOpenTodo({ ...todo, index })}
       >
         <span className={isFinishedTodo}>{todo.todoName}</span>
-        <ArrowBackIosIcon fontSize="small" />
+        <ArrowBackIosIcon className="arrow" fontSize="small" />
       </div>
     </div>
   );

@@ -5,9 +5,7 @@ import Modal from "../modal/Modal";
 import Display from "../display/Display";
 import "./style.css";
 
-const whiteColor = "#ffffff";
-
-const style = {
+export const style = {
   wrapper: {
     display: "flex",
     alignItems: "center",

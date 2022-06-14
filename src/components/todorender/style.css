@@ -25,3 +25,7 @@
   text-decoration: line-through;
   color: #8080808f;
 }
+
+.arrow{
+  transform: rotate(180deg);
+}

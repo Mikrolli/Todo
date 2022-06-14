@@ -13,7 +13,7 @@ const Modal = ({
   isOpen,
   handleSetFieldValue,
   formData,
-  handleSetTodoOnSubmit,
+  handleSetTodoOnSubmit
 }) => {
   return (
     <Dialog open={isOpen} onClose={handleOpenModal}>
